@@ -1,0 +1,84 @@
+---
+title: "Final_Project"
+author: "Bryan Morgan"
+date: "4/3/2019"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+library(stargazer)
+library(multiwayvcov)  
+library(sandwich)
+library(ri)
+library(dplyr)
+```
+
+Set things up
+
+```{r}
+main_dataFrame <- data.frame(
+  "source" = c(1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3),
+  "week1" = c(12,10,3,2,6,8,6,1,1,7,8,NaN,22,11,1,13,3,59,7,1,6,4,1,12,3,31,20,6,3,15,3,2),
+  "week2" = c(19,6,3,5,7,7,2,1,2,10,10,NaN,13,6,0,4,3,17,6,0,2,4,1,12,3,31,20,6,3,15,3,2),
+  "week3" = c(12,2,6,4,7,9,5,1,10,7,6,NaN,24,9,1,6,14,14,2,0,1,7,2,15,2,27,16,5,4,9,2,2),
+  "week4" = c(17,2,13,6,9,32,5,1,3,7,7,NaN,13,6,4,6,7,9,3,0,1,7,2,8,2,4,10,4,3,9,1,2),
+  "treatment" = c(1,0,1,1,0,0,0,1,1,0,1,1,1,1,1,0,0,0,0,0,1,1,0,0,1,0,0,1,1,0,1,0),
+  "Female" = c(0,1,1,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,1,1,1,0,1,0,0,0,0,0,0,1),
+  "Age" = c("20","30","20","40","30","40","30","30","20","30","20","50","40","40","30","40","20","40","50","30","40","60","50","40","40","40","40","30","40","50","40","20"),
+  "Highest_Ed" = c("Bachelor","High School","Bachelor","Masters","Bachelor","Bachelor","Masters","Bachelor","Bachelor","Bachelor","Masters","Bachelor","Bachelor","Master","Bachelor","Bachelor","Bachelor","Master","Master","Bachelor","Masters","PhD","PhD","Masters","Masters","PhD","Masters","Bachelor","PhD","Masters","Masters","PhD"),
+  "West Coast" = c(1,1,1,1,1,1,1,1,1,1,1,0,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,1,1,1),
+  "Tech Field" = c(1,0,0,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,0,1,1,1)
+  #"Actively Looking" = c(0,0,1,0,0,1,0,0,0,0,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,0,1,0,1,1,1,1,1,0,0,0,0)
+)
+
+main_dataFrame$DnD <- (main_dataFrame$week3+main_dataFrame$week4) - (main_dataFrame$week1+main_dataFrame$week2)
+```
+
+```{r}
+main_no_na <- na.omit(main_dataFrame)
+```
+
+
+```{r}
+ri_y <- main_no_na$DnD
+ri_Z <- main_no_na$treatment
+ri_block <- main_no_na$source
+
+perms <- genperms(ri_Z, blockvar = ri_block)
+probs <- genprobexact(ri_Z, blockvar = ri_block)
+ate <- estate(ri_y, ri_Z, prob = probs)
+
+Ys <- genouts(ri_y, ri_Z, ate=0)
+distout <- gendist(Ys, perms, prob = probs)
+dispdist(distout, ate)
+```
+
+```{r}
+main_lm_nieve <- lm(DnD ~ treatment, data=main_no_na)
+main_lm_summary <- summary(main_lm_nieve)
+main_lm_summary
+```
+
+
+```{r}
+main_lm_covariate <- lm(DnD ~ treatment + Female + Highest_Ed + Age, data=main_no_na)
+main_lm_covariate_summary <- summary(main_lm_covariate)
+main_lm_covariate_summary
+```
+
+
+```{r}
+#sqrt(diag(vcovHC(main_lm_covariate)))[["treatment"]]
+
+vcovHC(main_lm_covariate)
+```
