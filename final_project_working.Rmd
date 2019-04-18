@@ -21,6 +21,8 @@ library(multiwayvcov)
 library(sandwich)
 library(ri)
 library(dplyr)
+library(pwr)
+library(psych)
 ```
 
 Set things up
@@ -71,8 +73,8 @@ ate
 
 ```{r}
 main_lm_nieve <- lm(DnD ~ treatment + source, data=main_noNA_df)
-main_lm_summary <- summary(main_lm_nieve)
-main_lm_summary
+main_lm_nieve_summary <- summary(main_lm_nieve)
+main_lm_nieve_summary
 ```
 
 ```{r}
@@ -89,4 +91,29 @@ main_lm_covariate_summary
 ```{r}
 stargazer(coeftest(main_lm_covariate,vcov.=vcovHC(main_lm_covariate,type="HC1")), type = "text")
 ```
+
+```{r}
+control_mean <- mean(main_noNA_df$DnD[main_noNA_df$treatment == 0])
+treatment_mean <- mean(main_noNA_df$DnD[main_noNA_df$treatment == 1])
+sample_std <- sd(main_noNA_df$DnD)
+max_dnd <- max(main_noNA_df$DnD)
+min_dnd <- min(main_noNA_df$DnD)
+describe(main_noNA_df$DnD)
+
+#Basic info calculations
+sample_std
+control_mean
+treatment_mean
+max_dnd
+min_dnd
+anova(main_lm_covariate)
+```
+
+```{r}
+#Calculate Power
+pwr.f2.test(u =9, v =21, f2 =(0.1273/(1-0.1273)) , sig.level = 0.05)
+```
+
+
+
 
