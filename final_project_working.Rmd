@@ -53,8 +53,31 @@ We know that a picture worth a thousands words. In your picture, you show Your p
 ### Subjects 
 
 ### Randamization Strategy
+3 members of the team each reached out to 10-12 friends and recruited them as our volunteers (32 in total).  We each randomly selected half of our volunteers as control using random functions in Excel and R, the other half are assigned as treatment. 
+
+We asked our volunteers each monitor and report their profile views to us.  This is to avoid unintended affect to number of views (our view of their profile would have artificially increased their profile views.)
+
+The half of volunteers assigned to treatment are asked to change their profile picture to a worse version according to previous description on the 14th day of our experiment. (16 people are in treatment and all changed their profile pictures on that day.) 
+
+Blocking:
+The reason each one of us randomly selected half of our volunteers as treatment is we believe blocking is needed.  The 3 team members are from three different geographical localtions (the Bay area, Seattle, and Toronto), and we have slightly different connections in LinkedIn.  We anticipate the effect of profile pictures could be different based on region, or job categories, or LinkedIn active level.  By blocking by "volunteer contact", we hope to limit the impact of differences between groups of people (for example some team member's contacts have in average much higher profile views than others)
 
 ### Measurement Process
+We measuree "number of profile views" as our outcome. 
+
+A view is when a LinkedIn user clicks on a the profile brief to open the profile details. 
+LinkedIn people search result shows this profile briefs, with profile picture in a list format.  A user will click on this profile brief is they are interested in a particular profile, and view more detailed information for the person.  Because the profile picture is shown with name, headline, and title shown, so we anticipate profile picture is an important part of the information affecting a viewer's decision to click on the brief or not. 
+
+Sources of profile views might include, but not limited to: Recruiters looking for candidate, or industry insider looking for contact, employer, or mentor, it could be just a google user searching for someone with similar names or background.
+
+A complication is search engines might serve direct link to a profile detail page by passing the profile brief list, where profile picture is part of the decision to view detail or not, which can be a concern for real user profiles, especially those influencers on LinkedIn. 
+
+To address this concern, we take 2 weeks of "before" and 2 weeks "after" profile pic changes, then compare the differences of before and after.  Because the search engie originated views are not affected by the profile pictures (search engines do not show profile pictures), so the differences between the two periods would not affected by such views.  
+So, we took a Difference in Different approach, to remove the influence of the search engine originated views. 
+
+DnD = Before_views – After_views
+
+
 
 ### ROXO 
 Considering the possibilities of substantially different baselines we took a difference in difference approach
@@ -181,6 +204,18 @@ We felt this would help mitigate potential noise and help us isolate any potenti
 We took 10+ individuals each, and randomly assigned them to control or treatment
 From there we observed 2 weeks of their LinkedIn data, prior to the experiment
 We then administered treatment, confirmed compliance and then observed again after 2 weeks
+
+However, our sample size is very small compare to how many co-variates LinkedIn collect people's information, and ways to categorize its users. 
+We need much more volunteers to control for factors like 
+-level of activeness on LinkedIn introduces lots of variance
+-gendere/age
+-career status/seniority
+-nature of work
+-industry
+
+We also need a standarization approach to "make a picture bad".  While there are many qualitative discussions of what is a good .vs. bad profile picture, an objective standard is needed to be able to generalize our findings.  
+
+
 
 ## Conclusion
 Use a paid campaign in LinkedIn to recruite random volunteers with random backgrounds to avoid selection bias
