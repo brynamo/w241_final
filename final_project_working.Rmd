@@ -1,19 +1,74 @@
 ---
-title: "Final_Project"
-author: "Bryan Morgan"
+title: "Your Experience or looks – What matters most in LinkedIn?"
+author: "Bryan Morgan, Alan Tan and Debasish Mukhopadhyay"
 date: "4/3/2019"
-output: pdf_document
+output:
+  pdf_document: default
+  word_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+**************
+* Suggested Format: 
+- Statement of the research question; why this is interesting to
+  someone who is predisposed to be interested; what other people know
+  about this; what (if any) obsrevational work has to say about this question
+- Clear statement of the experiment
+  - Research Design (using =ROXO= grammar)
+  - Randomization engineering 
+  - Experimental materials (e.g. treatment materials)
+  - Measurement of variables
+  - Modeling choices
+- Clear statement of results
+  - In text description of your results
+  - Figures and tables that support your in text description
+  - Clean, clear, well articulated relationships between your theory,
+    your hypotheses, the numbers that your models produce, and the
+    figures you present. 
+*********************
+## Background
+LinkedIn has been the ubiquitous platform for the professional networking and job search. With 610 million users, 146 million in USA alone, makes it single most important profesional networking place in the world. LinkedIn is extremely popular globally. It is present in more than 200 countries. 40% of it's users visit LinkedIn site daily. One may ask, why do these people come to LinkedIn. It is now a survival tool for professionals in a highly connected World. Here different professionals learn about what is happenning in their industry and profession and learn from others. 80% of LinkedIn members consider professional networking is key to their career success. https://blog.linkedin.com/2017/april/13/introducing-a-smarter-way-to-message-and-build-meaningful-relationships-on-linkedin It is 
 
-## R Markdown
+A typical user of LinkedIn creates her digital resume, called "profile" and create a graph of connections with friends, coleagues and acquantances. An user with 1000 connections will potentially have more than 11 million connection in a job market. WhileUsers have an option to include a photograph in their profile. LinkedIn research shows that profiles with a headshot gets 21 times more profile views compared to profiles without pictures https://blog.linkedin.com/2016/08/03/5-steps-to-improve-your-linkedin-profile-in-minutes-. Same research also suggests that having a profile picture increases your chance to receive a message by 36 times. 
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+An accepted rule in LinkedIn profile is to have a very professional picture. A simple web search shows more than 120 websites suggests various rules for LinkedIn profile images. They all claim – Image quality matters. However no scientific research has been done so far to prove that to be the case. As a part of the W241 course, we wanted to run a scientific experiment to prove if it really matters to have professional pictures in your profile.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+## Research Question
+In a connected world of data and algorithms, does your look matter in your professional social network and employment?
+
+We are setting up an experiment where want to test this. In our experiment, the null hypothesis is that the quality of profile picture does not matter. 
+
+## Why is this research is important
+We know that a picture worth a thousands words. In your picture, you show Your physical, psychological, economical, environmental conditions through your presentation, gesture, dress, background,expressions etc. A person, or ML algorithms can guess your race, religion, location [GPS coordinates in metadata], age, sexual orientation etc. 
+
+## Research Design
+
+### Null Hypothesis
+
+### Treatment and control
+
+### Subjects 
+
+### Randamization Strategy
+
+### Measurement Process
+
+### ROXO 
+Considering the possibilities of substantially different baselines we took a difference in difference approach
+We felt this would help mitigate potential noise and help us isolate any potential treatment effect
+We took 10+ individuals each, and randomly assigned them to control or treatment
+From there we observed 2 weeks of their LinkedIn data, prior to the experiment
+We then administered treatment, confirmed compliance and then observed again after 2 weeks
+
+### Pilot and learning
+
+## Analysis 
+
+
+
 
 ```{r}
 library(stargazer)
@@ -24,7 +79,13 @@ library(dplyr)
 library(pwr)
 library(psych)
 ```
-
+```{r pressure, echo=FALSE, fig.cap="A caption", out.width = '100%'}
+knitr::include_graphics("finalproject/slide2.png")
+```
+```{r table}
+#knitr::kable(mtcars[1:5,, 1:5], caption = "A table caption")
+knitr::include_graphics(rep("finalproject/slide2.png", 3))
+```
 Set things up
 
 ```{r}
@@ -114,6 +175,21 @@ anova(main_lm_covariate)
 pwr.f2.test(u =9, v =21, f2 =(0.1273/(1-0.1273)) , sig.level = 0.05)
 ```
 
+## Generalizability
+Considering the possibilities of substantially different baselines we took a difference in difference approach
+We felt this would help mitigate potential noise and help us isolate any potential treatment effect
+We took 10+ individuals each, and randomly assigned them to control or treatment
+From there we observed 2 weeks of their LinkedIn data, prior to the experiment
+We then administered treatment, confirmed compliance and then observed again after 2 weeks
+
+## Conclusion
+Use a paid campaign in LinkedIn to recruite random volunteers with random backgrounds to avoid selection bias
+
+Run the experiment for multiple weeks so that each volunteer can have multiple treatments 
+
+Use automation to create treatment "dosage"
+
+Collect more covariate  information to better understand variability around professionals such as bloggers, writers who likely to have high variability in profile views
 
 
 
