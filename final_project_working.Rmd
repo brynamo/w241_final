@@ -73,6 +73,7 @@ Sources of profile views might include, but not limited to: Recruiters looking f
 A complication is search engines might serve direct link to a profile detail page by passing the profile brief list, where profile picture is part of the decision to view detail or not, which can be a concern for real user profiles, especially those influencers on LinkedIn. 
 
 To address this concern, we take 2 weeks of "before" and 2 weeks "after" profile pic changes, then compare the differences of before and after.  Because the search engie originated views are not affected by the profile pictures (search engines do not show profile pictures), so the differences between the two periods would not affected by such views.  
+
 So, we took a Difference in Different approach, to remove the influence of the search engine originated views. 
 
 DnD = Before_views – After_views
@@ -86,7 +87,23 @@ We took 10+ individuals each, and randomly assigned them to control or treatment
 From there we observed 2 weeks of their LinkedIn data, prior to the experiment
 We then administered treatment, confirmed compliance and then observed again after 2 weeks
 
+
 ### Pilot and learning
+
+We started our experiment with a pilot, which was based on our original experiment design.  
+We first created 3 pairs of profiles, each member of a pair shared the same profile details other than profile picture and name (all education, professional experiences are the same between the two).  We also tried to establish connections among the testing profiles to increase the number of followers each profile has. The pilot run for a week, and was fine, although our testing profiles did not generate any profile views. 
+
+We then went a step further created 12 more pairs of profiles, half of 30 pairs that we originally planned.  Similar to first phase of pilot, each pair shares everything other than profile pictures and names.   Within less than one week, LinkedIn started to suspend some of our testing profiles. The surviving profiles also had very few meaningful profile views other than spam advertisers. 
+
+Realizing LinkedIn would not allow us to run our experiment as we originally designed it, we quickly went back to the drawing board, and changed our design to recruited friends who have real LinkedIn profiles. 
+
+What we learned from the pilot was that:
+- Experiment design might run into unexpected platform policy issues – as the platforms become more and more centralized, this risk might be increasing.  We will have to work with real LinkedIn profiles by recruiting users.  
+- Newly created testing artificial profiles have very limited views – while some of our friends had dozens of views a week, our testing profiles had only 1 or 2 views, including spam views.  
+- The creation of the profiles requires much more effort than we expected – not only we need to create all the history of the artificial person, but also we need to expand the network and increase activity for these profiles, it could take weeks to “fake” the activity level of these profiles to generate enough interest to measure the profile views. 
+- Blocking and clustering design needs to align with the possible.  We planned to block by profession, industry and career status with our original design.  However, because of the LinkedIn suspension, we have to recruit people from our LinkedIn network to participate and they are highly concentrated in IT industry.  We chose to block by which team member recruited them, which is much less precise than our original design.  
+
+
 
 ## Analysis 
 
@@ -101,6 +118,7 @@ library(ri)
 library(dplyr)
 library(pwr)
 library(psych)
+library(lmtest)
 ```
 ```{r pressure, echo=FALSE, fig.cap="A caption", out.width = '100%'}
 knitr::include_graphics("finalproject/slide2.png")
@@ -205,7 +223,7 @@ We took 10+ individuals each, and randomly assigned them to control or treatment
 From there we observed 2 weeks of their LinkedIn data, prior to the experiment
 We then administered treatment, confirmed compliance and then observed again after 2 weeks
 
-However, our sample size is very small compare to how many co-variates LinkedIn collect people's information, and ways to categorize its users. 
+To claim our finding has any generalizability, our sample size is very small compare to how many co-variates LinkedIn collect people's information, and ways to categorize its users. 
 We need much more volunteers to control for factors like 
 -level of activeness on LinkedIn introduces lots of variance
 -gendere/age
