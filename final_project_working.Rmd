@@ -46,6 +46,8 @@ We know that a picture worth a thousands words. In your picture, you show Your p
 
 ## Research Design
 
+For our research design, we ended up with two very different experiments. One of which ran completely, and another which we initially started with
+
 ### Null Hypothesis
 
 ### Treatment and control
@@ -89,11 +91,7 @@ We then administered treatment, confirmed compliance and then observed again aft
 ### Pilot and learning
 
 ## Analysis 
-
-
-
-
-```{r}
+```{r echo=FALSE}
 library(stargazer)
 library(multiwayvcov)  
 library(sandwich)
@@ -101,44 +99,16 @@ library(ri)
 library(dplyr)
 library(pwr)
 library(psych)
-```
-```{r pressure, echo=FALSE, fig.cap="A caption", out.width = '100%'}
-knitr::include_graphics("finalproject/slide2.png")
-```
-```{r table}
-#knitr::kable(mtcars[1:5,, 1:5], caption = "A table caption")
-knitr::include_graphics(rep("finalproject/slide2.png", 3))
-```
-Set things up
+library(lmtest)
 
-```{r}
-main_dataFrame <- data.frame(
-  "source" = c("1","1","1","1","1","1","1","1","1","1","2","2","2","2","2","2","2","2","2","2","3","3","3","3","3","3","3","3","3","3","3","3"),
-  "week1" = c(12,10,3,2,6,8,6,1,1,7,8,NaN,22,11,1,13,3,59,7,1,6,4,1,12,3,31,20,6,3,15,3,2),
-  "week2" = c(19,6,3,5,7,7,2,1,2,10,10,NaN,13,6,0,4,3,17,6,0,2,4,1,12,3,31,20,6,3,15,3,2),
-  "week3" = c(12,2,6,4,7,9,5,1,10,7,6,NaN,24,9,1,6,14,14,2,0,1,7,2,15,2,27,16,5,4,9,2,2),
-  "week4" = c(17,2,13,6,9,32,5,1,3,7,7,NaN,13,6,4,6,7,9,3,0,1,7,2,8,2,4,10,4,3,9,1,2),
-  "treatment" = c(1,0,1,1,0,0,0,1,1,0,1,1,1,1,1,0,0,0,0,0,1,1,0,0,1,0,0,1,1,0,1,0),
-  "Female" = c(0,1,1,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,0,0,1,1,1,0,1,0,0,0,0,0,0,1),
-  "Age" = c("20","30","20","40","30","40","30","30","20","30","20","50","40","40","30","40","20","40","50","30","40","60","50","40","40","40","40","30","40","50","40","20"),
-  "Highest_Ed" = c("Bachelor","High School","Bachelor","Masters","Bachelor","Bachelor","Masters","Bachelor","Bachelor","Bachelor","Masters","Bachelor","Bachelor","Masters","Bachelor","Bachelor","Bachelor","Masters","Masters","Bachelor","Masters","PhD","PhD","Masters","Masters","PhD","Masters","Bachelor","PhD","Masters","Masters","PhD"),
-  "West Coast" = c(1,1,1,1,1,1,1,1,1,1,1,0,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,1,1,1),
-  "Tech Field" = c(1,0,0,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,0,1,1,1)
-  #"Actively Looking" = c(0,0,1,0,0,1,0,0,0,0,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,NaN,0,1,0,1,1,1,1,1,0,0,0,0)
-)
-
+main_dataFrame <- read.csv("/Users/bmorgan/Downloads/Results\ For\ Final\ Project\ -\ Sheet1.csv")
 main_dataFrame$DnD <- (main_dataFrame$week3+main_dataFrame$week4) - (main_dataFrame$week1+main_dataFrame$week2)
 ```
-
-```{r}
-main_noNA_df <- na.omit(main_dataFrame)
-```
-
-
-```{r}
-ri_y <- main_noNA_df$DnD
-ri_Z <- main_noNA_df$treatment
-ri_block <- main_noNA_df$source
+#### Randomized Inference Results
+```{r echo=FALSE}
+ri_y <- main_dataFrame$DnD
+ri_Z <- main_dataFrame$Treatment
+ri_block <- main_dataFrame$Source
 
 perms <- genperms(ri_Z, blockvar = ri_block)
 probs <- genprobexact(ri_Z, blockvar = ri_block)
@@ -149,25 +119,18 @@ distout <- gendist(Ys, perms, prob = probs)
 dispdist(distout, ate)
 ```
 
-```{r}
-ate
-```
-
-
-
-```{r}
-main_lm_nieve <- lm(DnD ~ treatment + source, data=main_noNA_df)
+```{r echo=FALSE}
+main_lm_nieve <- lm(DnD ~ Treatment + Source, data=main_dataFrame)
 main_lm_nieve_summary <- summary(main_lm_nieve)
 main_lm_nieve_summary
 ```
 
-```{r}
+```{r echo=FALSE}
 stargazer(coeftest(main_lm_nieve,vcov.=vcovHC(main_lm_nieve,type="HC1")), type = "text")
 ```
 
-
-```{r}
-main_lm_covariate <- lm(DnD ~ treatment + Female + Highest_Ed + Age, data=main_noNA_df)
+```{r echo=FALSE}
+main_lm_covariate <- lm(DnD ~ Treatment + Female + Highest.Education + Age + Source, data=main_dataFrame)
 main_lm_covariate_summary <- summary(main_lm_covariate)
 main_lm_covariate_summary
 ```
@@ -177,12 +140,12 @@ stargazer(coeftest(main_lm_covariate,vcov.=vcovHC(main_lm_covariate,type="HC1"))
 ```
 
 ```{r}
-control_mean <- mean(main_noNA_df$DnD[main_noNA_df$treatment == 0])
-treatment_mean <- mean(main_noNA_df$DnD[main_noNA_df$treatment == 1])
-sample_std <- sd(main_noNA_df$DnD)
-max_dnd <- max(main_noNA_df$DnD)
-min_dnd <- min(main_noNA_df$DnD)
-describe(main_noNA_df$DnD)
+control_mean <- mean(main_dataFrame$DnD[main_dataFrame$Treatment == 0])
+treatment_mean <- mean(main_dataFrame$DnD[main_dataFrame$Treatment == 1])
+sample_std <- sd(main_dataFrame$DnD)
+max_dnd <- max(main_dataFrame$DnD)
+min_dnd <- min(main_dataFrame$DnD)
+describe(main_dataFrame$DnD)
 
 #Basic info calculations
 sample_std
@@ -195,8 +158,14 @@ anova(main_lm_covariate)
 
 ```{r}
 #Calculate Power
-pwr.f2.test(u =9, v =21, f2 =(0.1273/(1-0.1273)) , sig.level = 0.05)
+pwr.f2.test(u =8, v =23, f2 =(0.2161/(1-0.2161)) , sig.level = 0.05)
 ```
+## Results
+We intentionally designed the experiment to try and compensate for the fact that individuals may have significantly different baselines with regards to profiles views. We subsequently used the difference-in-difference methodology to ensure we were looking at the changes in profile views for individual users, somewhat normalizing the treatment effect. We expected to mitigate wild shifts in profiles views with this methodology, and expected that we would be able to sufficiently satisfy the assumption that a change in the control group would have been equally likely to impact the treatment group. Unfortunately though, the difference-in-difference method was not sufficient to compensate for the wide changes in profile views an individual will see from week to week. This was born out in our data, resulting in a wide range, with a minimum of -53 profile views (meaning the two weeks prior to the experiment, this individual had 53 more profile views than during the two weeks of the experiment) and a maximum of +23 profile views. The results of our experiment, were therefore inconclusive. Due to the wide range of results, even using difference in difference, we were not able to detect a treatment effect. Ultimately, we would have needed a much larger sample size to have made any significant conclusions. Nonetheless, we were diligent in our analysis, and examined the data using both randomized inference to initially evaluate whether or not there was any treatment effect, and linear regression with covariates to try and isolate more of the potential treatment effect.
+When conducting the randomized inference analysis, we wanted to ensure we were taking into consideration some potential bias or unobserved heterogeneous bias that may have developed due to difference in the individuals approached. The three co-authors come from very different backgrounds, with different regions, levels of seniority in their organizations and social backgrounds. This meant, that we should expect there to be a non-trivial amount of unobserved heterogeneity amongst the groups, so we we decided to block the subjects based on the source. For privacy reasons, we converted the original names of both the sources (with sources becoming “Source 1”,  “Source 2”,  “Source 3”) as well as the subjects (using SHA1, via the hashlib library in python, to convert their initials). From there, we were able to start running the actual randomized inference. We wanted to ensure that our experimental results were likely to generalize well and to follow common conventions, so predetermined that we would use a p-value of 0.05 as our requirement for statistically significant values. Unfortunately our results from the randomized inference, using blocking, did not meet this criteria. We used a two tailed method because, while we expected the unprofessional photos to have a negative impact on profile views, we were not certain of the impact and wanted to evaluate at a larger level whether or not there was any effect at all. Our two tailed test had a  2.5% quantile equal to -8.8125 and a 97.5% quantile equal to 8.6875 while our average treatment effect was 7.0625. This resulted in a p-value of 0.135 for our two-tailed test. As identified earlier, this did not give us a statistically significant test, but it does provide some interesting material. Subsequently we decided to dig a little deeper and evaluate the results using linear regression as well.
+Using linear regression, we wanted to take a two step approach. First we wanted to do something similar to what we had done in the randomized inference with regards to blocking. Secondly we wanted to add additional covariates which we thought may be interesting or contribute to the wide variety of difference-in-difference results we were seeing. Starting from the initial analysis, using the source as a covariate, we fitted a linear model to our data. The resulting model did identify with a p-value less than 0.05 that one of the sources correlated with a lower difference-in-difference. Yet it is impossible to evaluate which of the many possible unobserved sources of heterogeneity caused the difference as there are far many more factors that could be different about the sources than what we were able to capture. Nonetheless, after seeing these results we decided to evaluate the experiment with greater detail, with the covariates we were able to collect from our subjects.
+The second phase of our analysis using linear regression took into consideration three additional covariates which we expected to play a potentially significant role in profile views: sex, education and age. For sex, we encoded the data with a dummy variable called Female with 1 being true and 0 being false. For education, we used categorical variables ranging from HIgh School, to PhD (with Bachelor and Masters in between). Finally for Age we used decades, as we did not want to violate the privacy of our participants and did not expect the difference between individual years to be significant. With this coding in place, we fitted a new model to the difference-in-difference data and evaluated the impact of treatment, while trying to control for these other covariates. One of the first effects of including the other covariates was that it significantly altered the impact of the sources, with Source 3 now having a lesser negative impact with a magnitude of -4.524 and SE of 6.529. Additionally, this resulted in an even weaker average treatment effect, which had a magnitude of 3.572 and robust standard errors of 4.244. This effectively meant that we could not identify any meaningful impact of the treatment on the number of profile views an individual was likely to receive during the two week experiment period. 
+Interestingly though, we did find some correlation between being female and only having a high-school education. Being Female, there seemed to be an increased number of views generally, with a effect of 10.225 and robust SE of 4.378. Based on the data though, it is unclear why women would be receiving more views on LinkedIn, and any conclusions would need to be backed up by an independent experiment. This is because there was a relatively small number of women in the experiment, so any conclusions could be simply due to chance. Similarly, it seems that having only a high-school education has a negative impact on profile views, but considering there was only one individual with only a high-school education, it is impossible to draw any conclusions. Ultimately, we would need a much larger and more diverse sample in order to support either of these findings with any confidence, though they do suggest some potential areas for additional consideration in the future. 
 
 ## Generalizability
 Considering the possibilities of substantially different baselines we took a difference in difference approach
