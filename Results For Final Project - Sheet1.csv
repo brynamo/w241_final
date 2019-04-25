@@ -1,0 +1,33 @@
+Source,Identifier,week1,week2,week3,week4,DnD,Treatment,Female,Age,Highest Education,West Coast,Tech Field
+Source1,7434d431bae1997c186c5fa16794f1cc11d93c0c,12,19,12,17,-2,1,0,20,Bachelor ,1,1
+Source1,1420699b90986b273bedc4c437cb9e1f08838f75,10,6,2,2,-12,0,1,30,High School,1,0
+Source1,0062b7500caa413af732bad72c86689bcef11b37,3,3,6,13,13,1,1,20,Bachelor ,1,0
+Source1,5f6584de459f2aaca3fd7d5425d8c4181ebb176a,2,5,4,6,3,1,0,40,Masters,1,1
+Source1,d458bc2e205159ce64d5fd3952f4a20459165442,6,7,7,9,3,0,0,30,Bachelor ,1,1
+Source1,bad7d653aa19ab7a6c4ee7926afc99b0e3e8b4d0,8,7,9,32,26,0,1,40,Bachelor ,1,1
+Source1,21bf91cd698517e981a2c4d72f32f1509ff6f17b,6,2,5,5,2,0,0,30,Masters,1,1
+Source1,29b8dfd346fbbe1be35c04a8e67c02b800a0f869,1,1,1,1,0,1,0,30,Bachelor ,1,0
+Source1,16797914c928ea9adba9319d64617da3f6bbf6ff,1,2,10,3,10,1,1,20,Bachelor ,1,0
+Source1,4728363d658db44ec4b47db9722b1f0017045a5b,7,10,7,7,-3,0,0,30,Bachelor ,1,1
+Source2,222c1df9bd57848de25c1704d636e477c8715e1a,8,10,6,7,-5,1,1,20,Masters,1,1
+Source2,7b048f0b7fe09c7ad2e0861a1d84d670ec1295d4,3,8,8,8,5,1,0,50,Bachelor ,0,1
+Source2,20896234b6f49f9999e5094d9ae2d390677a00c9,22,13,24,13,2,1,0,40,Bachelor ,1,1
+Source2,fa55c1b49258fab7f6c53c8f7046e97aff0fbcb3,11,6,9,6,-2,1,0,40,Masters,0,1
+Source2,171c2acab7b5ce2e04e643c50490fffcb20159c4,1,0,1,4,4,1,0,30,Bachelor ,0,1
+Source2,6e6623db4f676cae751fcb6b85c9888f9b5c61d0,13,4,6,6,-5,0,0,40,Bachelor ,0,1
+Source2,a6e447e7fec5d0e03346a99d68d0b0e6afa2d416,3,3,14,7,15,0,0,20,Bachelor ,0,1
+Source2,a4fcb1f8fedb5ab7e63b0be74d2d56a61f4f2958,59,17,14,9,-53,0,0,40,Masters,0,1
+Source2,27ae239256729983b9660e04c9b89ccff213d772,7,6,2,3,-8,0,0,50,Masters,0,1
+Source2,da62cfd63ac8b94fef82bb44179134dd302fa04f,1,0,0,0,-1,0,0,30,Bachelor ,0,1
+Source3,b8baa92a63fbc48d1ec6cb03a0b80ec8a669d4e1,6,2,1,1,-6,1,1,40,Masters,1,0
+Source3,599432590cf223fb8d9f19fddd9c026637b4bfd1,4,4,7,7,6,1,1,60,PhD,1,1
+Source3,3a15aa56a62c9fcb08e7280f163658ec58c25ed5,1,1,2,2,2,0,1,50,PhD,1,0
+Source3,d199e0d37afc3e4b2e3a94dd2fd58348f1e8b6ab,12,12,15,8,-1,0,0,40,Masters,1,1
+Source3,20fdf7efbbedd69bc902a0b12bba734a4e673bf4,3,3,2,2,-2,1,1,40,Masters,1,1
+Source3,c565a65409aad9164a959c1ef70749e611e895d8,31,31,27,4,-31,0,0,40,PhD,1,1
+Source3,f9866abeeec0c24da014eca6d250c98b55e04100,20,20,16,10,-14,0,0,40,Masters,1,1
+Source3,23405d5163a953b6270d8c79650ea7b73fc8e019,6,6,5,4,-3,1,0,30,Bachelor ,1,1
+Source3,b7a15cf43adae2875460932c12b234e34554a238,3,3,4,3,1,1,0,40,PhD,0,0
+Source3,285ff313098bddf10ba09c92997b2b159cf07019,15,15,9,9,-12,0,0,50,Masters,1,1
+Source3,d64c336d029649ea1d54bb3cd2cd6ff113d96c2a,3,3,2,1,-3,1,0,40,Masters,1,1
+Source3,85c4a3fe9da27ae9098cb633d8c051af26f7a15e,2,2,2,2,0,0,1,20,PhD,1,1
